@@ -29,7 +29,7 @@ Para rodar o Mirage localmente ou em seu servidor, você precisará apenas do **
 
 1. Clone o repositório:
 ```bash
-git clone [(https://github.com/arthurhmarinho/mirage)]
+git clone (https://github.com/arthurhmarinho/mirage)
 cd mirage
 ```
 
