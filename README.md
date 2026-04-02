@@ -1,6 +1,5 @@
 # Mirage
 
-![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![Rust](https://img.shields.io/badge/sensor-Rust-orange.svg)
 ![Go](https://img.shields.io/badge/backend-Go-00ADD8.svg)
 ![Docker](https://img.shields.io/badge/deploy-Docker-2496ED.svg)
@@ -59,7 +58,3 @@ O **Mirage** é um projeto de código aberto e todas as contribuições são mui
 Por favor, certifique-se de que seu código segue as boas práticas das linguagens utilizadas e inclua testes sempre que possível.
 
 ---
-
-## Licença
-
-Este projeto está sob a licença MIT. Veja o arquivo LICENSE para mais detalhes.
