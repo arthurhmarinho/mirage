@@ -1,0 +1,16 @@
+# Arquivos gerados pela compilação do Rust
+/sensor/target/
+**/*.rs.bk
+
+# Logs do Honeypot (NÃO SUBIR para não vazar IPs capturados)
+*.jsonl
+sensor_logs.jsonl
+
+# Configurações de IDEs (VS Code, etc)
+.vscode/
+.idea/
+*.swp
+
+# Arquivos de Sistema Operacional
+.DS_Store
+Thumbs.db
