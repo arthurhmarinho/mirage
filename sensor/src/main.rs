@@ -1,6 +1,7 @@
 mod network;
 mod logger;
 mod config;
+mod api;
 
 fn main() {
     // 1. Carrega as configurações (variáveis de ambiente ou padrão)

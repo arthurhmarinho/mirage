@@ -60,7 +60,11 @@ fn handle_connection(mut stream: TcpStream) {
             }
         }
         
-        // Chama a função para salvar no arquivo JSONL
-        logger::log_attack(ip.to_string(), payload_final);
+        // Garante que é uma String
+        let payload_str = payload_final.to_string();
+        // Chama a função para salvar no arquivo JSONL, agora está passando um CLONE da string para o logger (consumindo o clone)
+        logger::log_attack(ip.to_string(), payload_str.clone());
+        // Passa a string original para a API (ela consome a original)
+        crate::api::send_alert(ip.to_string(), payload_str);
     }
 }
