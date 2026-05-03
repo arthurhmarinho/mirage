@@ -13,4 +13,7 @@ sensor_logs.jsonl
 
 # Arquivos de Sistema Operacional
 .DS_Store
-Thumbs.db
+Thumbs.db 
+
+#Variáveis de ambiente (NÃO SUBIR para não vazar credenciais)
+.env

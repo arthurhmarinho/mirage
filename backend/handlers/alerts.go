@@ -1,12 +1,12 @@
 package handlers
 
 import (
+	"backend/db"
 	"encoding/json"
 	"fmt"
 	"net/http"
 )
 
-// Alert representa a estrutura exata do JSON enviado pelo sensor Rust
 type Alert struct {
 	Timestamp uint64 `json:"timestamp"`
 	IP        string `json:"ip"`
@@ -14,29 +14,32 @@ type Alert struct {
 }
 
 func HandleAlerts(w http.ResponseWriter, r *http.Request) {
-	// Garante que só aceite requisições POST
 	if r.Method != http.MethodPost {
 		http.Error(w, "Método não permitido", http.StatusMethodNotAllowed)
 		return
 	}
 
 	var alert Alert
-
-	// Decodifica o corpo da requisição (JSON) para o struct Go
 	err := json.NewDecoder(r.Body).Decode(&alert)
 	if err != nil {
 		http.Error(w, "Erro ao processar o JSON", http.StatusBadRequest)
 		return
 	}
 
-	//No MVP, vai apenas imprimir o alerta no console do backend. Futuramente, pode ser armazenado em um banco de dados ou enviado para um sistema de monitoramento.
-	fmt.Printf("[!] NOVO ALERTA RECEBIDO:\n")
-	fmt.Printf("   Origem: %s\n", alert.IP)
-	fmt.Printf("   Payload: %s\n", alert.Payload)
-	fmt.Println("--------------------------------------------------")
+	// Insere o alerta diretamente no PostgreSQL
+	query := `INSERT INTO alerts (timestamp, ip, payload) VALUES ($1, $2, $3)`
+	_, err = db.Conn.Exec(query, alert.Timestamp, alert.IP, alert.Payload)
+	if err != nil {
+		fmt.Println("[-] Erro ao salvar no banco:", err)
+		http.Error(w, "Erro interno do servidor ao salvar dado", http.StatusInternalServerError)
+		return
+	}
 
-	// Responde ao sensor que o dado foi recebido com sucesso (HTTP 201 Created)
+	// Mostra no console apenas confirmando que salvou
+	fmt.Printf("[!] ALERTA SALVO NO BANCO DE DADOS:\n")
+	fmt.Printf("    Origem: %s\n", alert.IP)
+	fmt.Println("---------------------------------------------------")
+
 	w.WriteHeader(http.StatusCreated)
-	json.NewEncoder(w).Encode(map[string]string{"message": "Alerta registrado"})
-
+	json.NewEncoder(w).Encode(map[string]string{"message": "Alerta persistido no PostgreSQL"})
 }

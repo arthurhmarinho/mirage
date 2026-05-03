@@ -1,6 +1,7 @@
 package main
 
 import (
+	"backend/db"
 	"fmt"
 	"log"
 	"net/http"
@@ -10,6 +11,9 @@ import (
 )
 
 func main() {
+	// Inicializa o banco de dados antes de tudo
+	db.Connect()
+
 	// Define a rota e vincula à função criada
 	http.HandleFunc("/api/alerts", handlers.HandleAlerts)
 
